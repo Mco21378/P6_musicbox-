@@ -1,84 +1,93 @@
-From: <Saved by Blink>
-Snapshot-Content-Location: https://github.com/Ra-ashi/musicbox/blob/none/audio-player.js
-Subject: =?utf-8?Q?musicbox/audio-player.js=20at=20none=20=C2=B7=20Ra-ashi/musicbo?=
- =?utf-8?Q?x=20=C2=B7=20GitHub?=
-Date: Sat, 15 Apr 2023 17:36:49 -0000
-MIME-Version: 1.0
-Content-Type: multipart/related;
-	type="text/html";
-	boundary="----MultipartBoundary--UoEdSpUFWfijpA8SOuQUBzP8xvR81FVoTu27jt95mk----"
+// NOTE: We are expecting you to *create* an AudioPlayer, but we are *not*
+// expecting you to modify the contents of this file.
+class AudioPlayer {
+  constructor() {
+    this._onKickCallback = this._onKickCallback.bind(this);
+
+    this.lastKickTime = -1;
+
+    this.dancer = new Dancer();
+
+    this.kick = this.dancer.createKick({
+      onKick: this._onKickCallback
+    });
+    this.kick.on();
+  }
+
+  setSong(songUrl) {
+    let audio = new Audio();
+    audio.crossOrigin = 'anonymous';
+    audio.loop = 'true';
+    audio.src = songUrl;
+    this.dancer.pause();
+    this.dancer.load(audio);
+  }
+
+  play() {
+    this.dancer.play();
+    const nowTime = Date.now();
+    if (this.lastKickTime === -1) {
+      this.lastKickTime = nowTime;
+    }
+  }
+
+  pause() {
+    this.dancer.pause();
+  }
+
+  setKickCallback(kickCallback) {
+    this.kickCallback = kickCallback;
+  }
+
+  _onKickCallback() {
+    if (!this.kickCallback) {
+      return;
+    }
+    const KICK_THRESHOLD = 0.2;
+    const nowTime = Date.now();
+    const diff = (nowTime - this.lastKickTime) / 1000;
+    if (diff > KICK_THRESHOLD) {
+      this.lastKickTime = nowTime;
+      this.kickCallback();
+    }
+  }
+}
 
 
-------MultipartBoundary--UoEdSpUFWfijpA8SOuQUBzP8xvR81FVoTu27jt95mk----
-Content-Type: text/html
-Content-ID: <frame-853051D537960326129454D00CCE7F01@mhtml.blink>
-Content-Transfer-Encoding: binary
-Content-Location: https://github.com/Ra-ashi/musicbox/blob/none/audio-player.js
 
-<!DOCTYPE html><html lang="en" data-color-mode="auto" data-light-theme="light" data-dark-theme="dark" data-a11y-animated-images="system" data-turbo-loaded=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" type="text/css" href="cid:css-773468cd-232c-49c8-b3d3-7513d52cabec@mhtml.blink" />
-    
-  <link rel="dns-prefetch" href="https://github.githubassets.com/">
-  <link rel="dns-prefetch" href="https://avatars.githubusercontent.com/">
-  <link rel="dns-prefetch" href="https://github-cloud.s3.amazonaws.com/">
-  <link rel="dns-prefetch" href="https://user-images.githubusercontent.com/">
-  <link rel="preconnect" href="https://github.githubassets.com/" crossorigin="">
-  <link rel="preconnect" href="https://avatars.githubusercontent.com/">
 
-  <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/light-0946cdc16f15.css"><link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/dark-3946c959759a.css">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
-  
-    <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/primer-f08069444ca3.css">
-    <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/global-4b09d265965c.css">
-    <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/github-036ff2cd1f49.css">
-  <link crossorigin="anonymous" media="all" rel="stylesheet" href="https://github.githubassets.com/assets/code-ec259ddb0854.css">
 
-    <meta name="optimizely-datafile" content="{&quot;groups&quot;: [], &quot;environmentKey&quot;: &quot;production&quot;, &quot;rollouts&quot;: [], &quot;typedAudiences&quot;: [], &quot;projectId&quot;: &quot;16737760170&quot;, &quot;variables&quot;: [], &quot;featureFlags&quot;: [], &quot;experiments&quot;: [], &quot;version&quot;: &quot;4&quot;, &quot;audiences&quot;: [{&quot;conditions&quot;: &quot;[\&quot;or\&quot;, {\&quot;match\&quot;: \&quot;exact\&quot;, \&quot;name\&quot;: \&quot;$opt_dummy_attribute\&quot;, \&quot;type\&quot;: \&quot;custom_attribute\&quot;, \&quot;value\&quot;: \&quot;$opt_dummy_value\&quot;}]&quot;, &quot;id&quot;: &quot;$opt_dummy_audience&quot;, &quot;name&quot;: &quot;Optimizely-Generated Audience for Backwards Compatibility&quot;}], &quot;anonymizeIP&quot;: true, &quot;sdkKey&quot;: &quot;WTc6awnGuYDdG98CYRban&quot;, &quot;attributes&quot;: [{&quot;id&quot;: &quot;16822470375&quot;, &quot;key&quot;: &quot;user_id&quot;}, {&quot;id&quot;: &quot;17143601254&quot;, &quot;key&quot;: &quot;spammy&quot;}, {&quot;id&quot;: &quot;18175660309&quot;, &quot;key&quot;: &quot;organization_plan&quot;}, {&quot;id&quot;: &quot;18813001570&quot;, &quot;key&quot;: &quot;is_logged_in&quot;}, {&quot;id&quot;: &quot;19073851829&quot;, &quot;key&quot;: &quot;geo&quot;}, {&quot;id&quot;: &quot;20175462351&quot;, &quot;key&quot;: &quot;requestedCurrency&quot;}, {&quot;id&quot;: &quot;20785470195&quot;, &quot;key&quot;: &quot;country_code&quot;}, {&quot;id&quot;: &quot;21656311196&quot;, &quot;key&quot;: &quot;opened_downgrade_dialog&quot;}], &quot;botFiltering&quot;: false, &quot;accountId&quot;: &quot;16737760170&quot;, &quot;events&quot;: [{&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;17911811441&quot;, &quot;key&quot;: &quot;hydro_click.dashboard.teacher_toolbox_cta&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18124116703&quot;, &quot;key&quot;: &quot;submit.organizations.complete_sign_up&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18145892387&quot;, &quot;key&quot;: &quot;no_metric.tracked_outside_of_optimizely&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18178755568&quot;, &quot;key&quot;: &quot;click.org_onboarding_checklist.add_repo&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18180553241&quot;, &quot;key&quot;: &quot;submit.repository_imports.create&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18186103728&quot;, &quot;key&quot;: &quot;click.help.learn_more_about_repository_creation&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18188530140&quot;, &quot;key&quot;: &quot;test_event&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18191963644&quot;, &quot;key&quot;: &quot;click.empty_org_repo_cta.transfer_repository&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18195612788&quot;, &quot;key&quot;: &quot;click.empty_org_repo_cta.import_repository&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18210945499&quot;, &quot;key&quot;: &quot;click.org_onboarding_checklist.invite_members&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18211063248&quot;, &quot;key&quot;: &quot;click.empty_org_repo_cta.create_repository&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18215721889&quot;, &quot;key&quot;: &quot;click.org_onboarding_checklist.update_profile&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18224360785&quot;, &quot;key&quot;: &quot;click.org_onboarding_checklist.dismiss&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18234832286&quot;, &quot;key&quot;: &quot;submit.organization_activation.complete&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18252392383&quot;, &quot;key&quot;: &quot;submit.org_repository.create&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18257551537&quot;, &quot;key&quot;: &quot;submit.org_member_invitation.create&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18259522260&quot;, &quot;key&quot;: &quot;submit.organization_profile.update&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18564603625&quot;, &quot;key&quot;: &quot;view.classroom_select_organization&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18568612016&quot;, &quot;key&quot;: &quot;click.classroom_sign_in_click&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18572592540&quot;, &quot;key&quot;: &quot;view.classroom_name&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18574203855&quot;, &quot;key&quot;: &quot;click.classroom_create_organization&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18582053415&quot;, &quot;key&quot;: &quot;click.classroom_select_organization&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18589463420&quot;, &quot;key&quot;: &quot;click.classroom_create_classroom&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18591323364&quot;, &quot;key&quot;: &quot;click.classroom_create_first_classroom&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18591652321&quot;, &quot;key&quot;: &quot;click.classroom_grant_access&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18607131425&quot;, &quot;key&quot;: &quot;view.classroom_creation&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;18831680583&quot;, &quot;key&quot;: &quot;upgrade_account_plan&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19064064515&quot;, &quot;key&quot;: &quot;click.signup&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19075373687&quot;, &quot;key&quot;: &quot;click.view_account_billing_page&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19077355841&quot;, &quot;key&quot;: &quot;click.dismiss_signup_prompt&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19079713938&quot;, &quot;key&quot;: &quot;click.contact_sales&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19120963070&quot;, &quot;key&quot;: &quot;click.compare_account_plans&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19151690317&quot;, &quot;key&quot;: &quot;click.upgrade_account_cta&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19424193129&quot;, &quot;key&quot;: &quot;click.open_account_switcher&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19520330825&quot;, &quot;key&quot;: &quot;click.visit_account_profile&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19540970635&quot;, &quot;key&quot;: &quot;click.switch_account_context&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19730198868&quot;, &quot;key&quot;: &quot;submit.homepage_signup&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19820830627&quot;, &quot;key&quot;: &quot;click.homepage_signup&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;19988571001&quot;, &quot;key&quot;: &quot;click.create_enterprise_trial&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20036538294&quot;, &quot;key&quot;: &quot;click.create_organization_team&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20040653299&quot;, &quot;key&quot;: &quot;click.input_enterprise_trial_form&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20062030003&quot;, &quot;key&quot;: &quot;click.continue_with_team&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20068947153&quot;, &quot;key&quot;: &quot;click.create_organization_free&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20086636658&quot;, &quot;key&quot;: &quot;click.signup_continue.username&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20091648988&quot;, &quot;key&quot;: &quot;click.signup_continue.create_account&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20103637615&quot;, &quot;key&quot;: &quot;click.signup_continue.email&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20111574253&quot;, &quot;key&quot;: &quot;click.signup_continue.password&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20120044111&quot;, &quot;key&quot;: &quot;view.pricing_page&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20152062109&quot;, &quot;key&quot;: &quot;submit.create_account&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20165800992&quot;, &quot;key&quot;: &quot;submit.upgrade_payment_form&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20171520319&quot;, &quot;key&quot;: &quot;submit.create_organization&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20222645674&quot;, &quot;key&quot;: &quot;click.recommended_plan_in_signup.discuss_your_needs&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20227443657&quot;, &quot;key&quot;: &quot;submit.verify_primary_user_email&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20234607160&quot;, &quot;key&quot;: &quot;click.recommended_plan_in_signup.try_enterprise&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20238175784&quot;, &quot;key&quot;: &quot;click.recommended_plan_in_signup.team&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20239847212&quot;, &quot;key&quot;: &quot;click.recommended_plan_in_signup.continue_free&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20251097193&quot;, &quot;key&quot;: &quot;recommended_plan&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20438619534&quot;, &quot;key&quot;: &quot;click.pricing_calculator.1_member&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20456699683&quot;, &quot;key&quot;: &quot;click.pricing_calculator.15_members&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20467868331&quot;, &quot;key&quot;: &quot;click.pricing_calculator.10_members&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20476267432&quot;, &quot;key&quot;: &quot;click.trial_days_remaining&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20476357660&quot;, &quot;key&quot;: &quot;click.discover_feature&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20479287901&quot;, &quot;key&quot;: &quot;click.pricing_calculator.custom_members&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20481107083&quot;, &quot;key&quot;: &quot;click.recommended_plan_in_signup.apply_teacher_benefits&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20483089392&quot;, &quot;key&quot;: &quot;click.pricing_calculator.5_members&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20484283944&quot;, &quot;key&quot;: &quot;click.onboarding_task&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20484996281&quot;, &quot;key&quot;: &quot;click.recommended_plan_in_signup.apply_student_benefits&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20486713726&quot;, &quot;key&quot;: &quot;click.onboarding_task_breadcrumb&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20490791319&quot;, &quot;key&quot;: &quot;click.upgrade_to_enterprise&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20491786766&quot;, &quot;key&quot;: &quot;click.talk_to_us&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20494144087&quot;, &quot;key&quot;: &quot;click.dismiss_enterprise_trial&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20499722759&quot;, &quot;key&quot;: &quot;completed_all_tasks&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20500710104&quot;, &quot;key&quot;: &quot;completed_onboarding_tasks&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20513160672&quot;, &quot;key&quot;: &quot;click.read_doc&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20516196762&quot;, &quot;key&quot;: &quot;actions_enabled&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20518980986&quot;, &quot;key&quot;: &quot;click.dismiss_trial_banner&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20535446721&quot;, &quot;key&quot;: &quot;click.issue_actions_prompt.dismiss_prompt&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20557002247&quot;, &quot;key&quot;: &quot;click.issue_actions_prompt.setup_workflow&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20595070227&quot;, &quot;key&quot;: &quot;click.pull_request_setup_workflow&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20626600314&quot;, &quot;key&quot;: &quot;click.seats_input&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20642310305&quot;, &quot;key&quot;: &quot;click.decrease_seats_number&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20662990045&quot;, &quot;key&quot;: &quot;click.increase_seats_number&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20679620969&quot;, &quot;key&quot;: &quot;click.public_product_roadmap&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20761240940&quot;, &quot;key&quot;: &quot;click.dismiss_survey_banner&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20767210721&quot;, &quot;key&quot;: &quot;click.take_survey&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20795281201&quot;, &quot;key&quot;: &quot;click.archive_list&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20966790249&quot;, &quot;key&quot;: &quot;contact_sales.submit&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20996500333&quot;, &quot;key&quot;: &quot;contact_sales.existing_customer&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;20996890162&quot;, &quot;key&quot;: &quot;contact_sales.blank_message_field&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21000470317&quot;, &quot;key&quot;: &quot;contact_sales.personal_email&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21002790172&quot;, &quot;key&quot;: &quot;contact_sales.blank_phone_field&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21354412592&quot;, &quot;key&quot;: &quot;click.dismiss_create_readme&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21366102546&quot;, &quot;key&quot;: &quot;click.dismiss_zero_user_content&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21370252505&quot;, &quot;key&quot;: &quot;account_did_downgrade&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21370840408&quot;, &quot;key&quot;: &quot;click.cta_create_readme&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21375451068&quot;, &quot;key&quot;: &quot;click.cta_create_new_repository&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21385390948&quot;, &quot;key&quot;: &quot;click.zero_user_content&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21467712175&quot;, &quot;key&quot;: &quot;click.downgrade_keep&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21484112202&quot;, &quot;key&quot;: &quot;click.downgrade&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21495292213&quot;, &quot;key&quot;: &quot;click.downgrade_survey_exit&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21508241468&quot;, &quot;key&quot;: &quot;click.downgrade_survey_submit&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21512030356&quot;, &quot;key&quot;: &quot;click.downgrade_support&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21539090022&quot;, &quot;key&quot;: &quot;click.downgrade_exit&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21543640644&quot;, &quot;key&quot;: &quot;click_fetch_upstream&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21646510300&quot;, &quot;key&quot;: &quot;click.move_your_work&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21656151116&quot;, &quot;key&quot;: &quot;click.add_branch_protection_rule&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21663860599&quot;, &quot;key&quot;: &quot;click.downgrade_dialog_open&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21687860483&quot;, &quot;key&quot;: &quot;click.learn_about_protected_branches&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21689050333&quot;, &quot;key&quot;: &quot;click.dismiss_protect_this_branch&quot;}, {&quot;experimentIds&quot;: [], &quot;id&quot;: &quot;21864370109&quot;, &quot;key&quot;: &quot;click.sign_in&quot;}], &quot;revision&quot;: &quot;1372&quot;}">
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  <title>musicbox/audio-player.js at none ¬∑ Ra-ashi/musicbox ¬∑ GitHub</title>
+  <title>musicbox/audio-player.js at none √Ç¬∑ Ra-ashi/musicbox √Ç¬∑ GitHub</title>
 
 
 
@@ -127,8 +136,8 @@ Content-Location: https://github.com/Ra-ashi/musicbox/blob/none/audio-player.js
     <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
     <meta property="fb:app_id" content="1401488693436528">
     <meta name="apple-itunes-app" content="app-id=1477376905">
-      <meta name="twitter:image:src" content="https://opengraph.githubassets.com/89387c7f726fe750ac00190cf0199fb70e0c17454f793dc21ef33a837b85597a/Ra-ashi/musicbox"><meta name="twitter:site" content="@github"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="musicbox/audio-player.js at none ¬∑ Ra-ashi/musicbox"><meta name="twitter:description" content="Contribute to Ra-ashi/musicbox development by creating an account on GitHub.">
-      <meta property="og:image" content="https://opengraph.githubassets.com/89387c7f726fe750ac00190cf0199fb70e0c17454f793dc21ef33a837b85597a/Ra-ashi/musicbox"><meta property="og:image:alt" content="Contribute to Ra-ashi/musicbox development by creating an account on GitHub."><meta property="og:image:width" content="1200"><meta property="og:image:height" content="600"><meta property="og:site_name" content="GitHub"><meta property="og:type" content="object"><meta property="og:title" content="musicbox/audio-player.js at none ¬∑ Ra-ashi/musicbox"><meta property="og:url" content="https://github.com/Ra-ashi/musicbox"><meta property="og:description" content="Contribute to Ra-ashi/musicbox development by creating an account on GitHub.">
+      <meta name="twitter:image:src" content="https://opengraph.githubassets.com/89387c7f726fe750ac00190cf0199fb70e0c17454f793dc21ef33a837b85597a/Ra-ashi/musicbox"><meta name="twitter:site" content="@github"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="musicbox/audio-player.js at none √Ç¬∑ Ra-ashi/musicbox"><meta name="twitter:description" content="Contribute to Ra-ashi/musicbox development by creating an account on GitHub.">
+      <meta property="og:image" content="https://opengraph.githubassets.com/89387c7f726fe750ac00190cf0199fb70e0c17454f793dc21ef33a837b85597a/Ra-ashi/musicbox"><meta property="og:image:alt" content="Contribute to Ra-ashi/musicbox development by creating an account on GitHub."><meta property="og:image:width" content="1200"><meta property="og:image:height" content="600"><meta property="og:site_name" content="GitHub"><meta property="og:type" content="object"><meta property="og:title" content="musicbox/audio-player.js at none √Ç¬∑ Ra-ashi/musicbox"><meta property="og:url" content="https://github.com/Ra-ashi/musicbox"><meta property="og:description" content="Contribute to Ra-ashi/musicbox development by creating an account on GitHub.">
       
     <link rel="assets" href="https://github.githubassets.com/">
 
@@ -1122,7 +1131,7 @@ Content-Location: https://github.com/Ra-ashi/musicbox/blob/none/audio-player.js
     <summary data-hotkey="l" aria-label="Jump to line" role="button"></summary>
     <details-dialog class="Box Box--overlay d-flex flex-column anim-fade-in fast linejump overflow-hidden" aria-label="Jump to line" role="dialog" aria-modal="true">
       <!-- '"` --><!-- </textarea></xmp> --><form class="js-jump-to-line-form Box-body d-flex" data-turbo="false" action="https://github.com/Ra-ashi/musicbox/blob/none/audio-player.js" accept-charset="UTF-8" method="get">
-        <input class="form-control flex-auto mr-3 linejump-input js-jump-to-line-field" type="text" placeholder="Jump to line‚Ä¶" aria-label="Jump to line" autofocus="">
+        <input class="form-control flex-auto mr-3 linejump-input js-jump-to-line-field" type="text" placeholder="Jump to line√¢¬Ä¬¶" aria-label="Jump to line" autofocus="">
           <button data-close-dialog="" type="submit" data-view-component="true" class="btn">    Go
 </button>
 </form>    </details-dialog>
@@ -1156,7 +1165,7 @@ Content-Location: https://github.com/Ra-ashi/musicbox/blob/none/audio-player.js
     <path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
 </svg>
 </a>        <span>
-        ¬© 2023 GitHub, Inc.
+        √Ç¬© 2023 GitHub, Inc.
         </span>
       </div>
     </div>
@@ -7512,9 +7521,9 @@ span.CodeMirror-selectedtext { background: none; }
 
 .CodeMirror-merge-scrolllock { position: relative; left: -50%; cursor: pointer; color: rgb(85, 85, 85); line-height: 1; }
 
-.CodeMirror-merge-scrolllock::after { content: "‚áõ¬†¬†‚áö"; }
+.CodeMirror-merge-scrolllock::after { content: "√¢¬á¬õ√Ç¬†√Ç¬†√¢¬á¬ö"; }
 
-.CodeMirror-merge-scrolllock.CodeMirror-merge-scrolllock-enabled::after { content: "‚áõ‚áö"; }
+.CodeMirror-merge-scrolllock.CodeMirror-merge-scrolllock-enabled::after { content: "√¢¬á¬õ√¢¬á¬ö"; }
 
 .CodeMirror-merge-copybuttons-left, .CodeMirror-merge-copybuttons-right { position: absolute; inset: 0px; line-height: 1; }
 
@@ -11947,7 +11956,7 @@ Content-Location: https://github.githubassets.com/assets/github-036ff2cd1f49.css
 
 .intgrs-lstng-item-description { position: relative; height: 2.8em; padding: 0px 8px; margin-top: 4px; overflow: hidden; font-size: 12px; color: var(--color-fg-muted); }
 
-.intgrs-lstng-item-description::after { position: absolute; right: 0px; bottom: 0px; padding: 0px 16px; color: transparent; content: "¬†"; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255) 80%); }
+.intgrs-lstng-item-description::after { position: absolute; right: 0px; bottom: 0px; padding: 0px 16px; color: transparent; content: "√Ç¬†"; background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255) 80%); }
 
 .intgr-admin-link { position: relative; display: inline-block; height: 25px; padding-left: 24px; font-size: 12px; vertical-align: middle; border: 1px solid var(--color-border-muted); border-radius: 6px; }
 
@@ -15017,7 +15026,7 @@ dl.form-group > dd textarea.compact { height: 100px; min-height: 0px; }
 
 .two-factor-recovery-code { display: inline-block; width: 48%; line-height: 1.6; text-align: center; }
 
-.two-factor-recovery-code::before { position: relative; top: -3px; margin-right: 8px; font-size: 12px; color: var(--color-fg-muted); content: "‚óè"; }
+.two-factor-recovery-code::before { position: relative; top: -3px; margin-right: 8px; font-size: 12px; color: var(--color-fg-muted); content: "√¢¬ó¬è"; }
 
 .recovery-codes-saving-options { margin-left: 32px; }
 
@@ -15648,7 +15657,7 @@ ul.clones li { width: 170px; }
 
 #user-content-toc ul ul { font-weight: var(--base-text-weight-normal, 400); }
 
-#user-content-toc ul ul li::before { float: left; margin-top: -0.2em; margin-right: 0.2em; font-size: 1.2em; line-height: 1; color: var(--color-fg-muted); content: "‚åû"; }
+#user-content-toc ul ul li::before { float: left; margin-top: -0.2em; margin-right: 0.2em; font-size: 1.2em; line-height: 1; color: var(--color-fg-muted); content: "√¢¬å¬û"; }
 
 #user-content-toc ul ul ul { padding-left: 0.9em; }
 
@@ -16210,7 +16219,9 @@ Content-Type: image/png
 Content-Transfer-Encoding: binary
 Content-Location: https://avatars.githubusercontent.com/u/123328303?s=48&v=4
 
-âPNG
+¬âPNG
 
-   IHDR  §  §   Ò.∆b  ⁄IDATxúÏ◊a≠£@ F—ÌıPu’Ä:<†`$ÏèMûÇ◊ =«¿|	·2lcå? w˜wı ÄƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒHÿV‡BŒc_=·˜=_Ô’∏7; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±cå’æ’yÏ´'PÙ|ΩWO¯J€Í\ÀÕ^$$~¯çƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄÑmı ÆÂ<ˆ’‡#‹ÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄ±ƒH; AÏÄÑ«cŒIÁ±œ9¯.œ◊{¬)€Ñ3nlŒCöÊñ$œàˇ¸∆	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	è1∆Í Áf$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$àê v@Çÿ	b$¸  ˇˇ≠" l€    IENDÆB`Ç
+ÔøΩÔøΩÔøΩ
+IHDRÔøΩÔøΩ¬§ÔøΩÔøΩ¬§ÔøΩÔøΩÔøΩ√±.√ÜbÔøΩÔøΩ√öIDATx¬ú√¨√óa¬≠¬£@ÔøΩF√ë√≠√µPu√ï¬Ä:<¬†`$√¨¬èM¬û¬Ç√ó√ä=√á√Ä|	√°2lc¬å?ÔøΩw√∑w√µÔøΩ¬Ä√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH√òV√†B√éc_=√°√∑=_√Ø√ï¬∏7; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±c¬å√ï¬æ√ïy√¨¬´'P√¥|¬ΩWO√∏J√õ√™\√ã√ç^$$~√∏¬ç√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬Ñm√µÔøΩ¬Æ√•<√∂√ï√†#√ú√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬±√ÑH; A√¨¬Ä¬Ñ√ác√éI√ß¬±√è9√∏.√è√ó{√Ç)√õ¬Ñ3nl√éC¬ö√¶¬ñ$√è¬à√ø√º√Ü	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	¬è1√Ü√™
+ÔøΩ√ßf$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$¬à¬ê v@¬Ç√ò	b$√ºÔøΩÔøΩ√ø√ø¬≠"√äl√õÔøΩÔøΩÔøΩÔøΩIEND¬ÆB`¬Ç
 ------MultipartBoundary--UoEdSpUFWfijpA8SOuQUBzP8xvR81FVoTu27jt95mk------
